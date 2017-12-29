@@ -1,0 +1,73 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="my-officerdetails">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+       .cardwidth{
+        width:12%;display: inline-block;
+      }
+    </style>
+
+    <div class="card">
+      <h1>Officer  Page</h1>
+      <template is="dom-repeat" items="{{data}}">
+            <div class="card cardwidth" on-click="oficerDetails">
+            <div>OfficerID:{{item.id}}</div>
+            <div>OfficerName:{{item.name}}</div>
+            </div>
+        </template>
+        <iron-ajax id="ajax"
+                 auto
+                 url="http://jsonplaceholder.typicode.com/users/"
+                 last-response="{{data}}"
+                 on-response="_onResponse"
+                 handleAs="json">
+      </iron-ajax>
+      <div class="wrapper-btns">
+            <paper-button raised class="primary" on-tap="backtodashboard">Back</paper-button>
+        </div>
+    </div>
+  </template>
+
+  <script>
+    class MyOfficerdetails extends Polymer.Element {
+      static get is() { return 'my-officerdetails'; }
+      backtodashboard(){
+        window.location.href='/view2';
+      }
+      oficerDetails(e){
+        var officerid = e.model.item;
+        window.location.href='/officerdetailspage?officerid=' +officerid.id;
+      }
+      _updateData() {
+            this.async(function() {
+              this.$.ajax.generateRequest();
+            }, 2000);
+          }
+          _onResponse() {
+            console.log('received response');
+            //this._updateData();
+          }
+    }
+
+    window.customElements.define(MyOfficerdetails.is, MyOfficerdetails);
+  </script>
+</dom-module>

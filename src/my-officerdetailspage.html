@@ -1,0 +1,65 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/bwt-datatable/bwt-datatable.html">
+
+
+
+<dom-module id="my-officerdetailspage">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      .cardwidth{
+        width:12%;display: inline-block;
+      }
+    </style>
+
+    <div class="card">
+       <h1>Officer Details Page</h1>
+        <paper-datatable data="{{newtest}}" selectable multi-selection response-width="767px">
+            <paper-datatable-column header="Title" property="taskId" sortable></paper-datatable-column>
+            <paper-datatable-column header="Desc" property="desc" sortable></paper-datatable-column>
+            <paper-datatable-column header="AssignTo" property="assignTo" sortable></paper-datatable-column>
+            <paper-datatable-column header="Date" property="date" sortable></paper-datatable-column>
+        </paper-datatable>
+      <div class="wrapper-btns">
+            <paper-button raised class="primary" on-tap="backto">Back</paper-button>
+        </div>
+    </div>
+  </template>
+
+  <script>
+    class MyOfficerdetailspage extends Polymer.Element {
+      static get is() { return 'my-officerdetailspage'; }
+      backto(){
+        window.location.href='/officerdetails';
+      }
+      constructor() {
+        super();
+        var newtest=[];
+        this.newtest=[
+          {"taskId":"2000","desc":"test","assignTo":"yyyyyyyyyyyyy","date":"12/20/2017"},
+        {"taskId":"2001","desc":"test1","assignTo":"abcssssssss","date":"12/20/2017"},
+        {"taskId":"2002","desc":"test2","assignTo":"xxxxxxxxxxx","date":"12/20/2017"},
+        {"taskId":"2003","desc":"test3","assignTo":"tttttttttttt","date":"12/20/2017"}
+        ];
+      }
+    }
+
+    window.customElements.define(MyOfficerdetailspage.is, MyOfficerdetailspage);
+  </script>
+</dom-module>

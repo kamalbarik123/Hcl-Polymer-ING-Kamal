@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dropdown/paper-dropdown.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<!--<link rel="import" href="../neon-animation/web-animations.html">
+<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-out-animation.html">-->
+
+<dom-module id="my-addnewtask">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h1>Assign New Task</h1>
+      <paper-input label="Task Id:"  value="{{taskobj.taskid}}"></paper-input>
+      <paper-input label="Task Description:"   value="{{taskobj.taskdesc}}"></paper-input>
+      <paper-dropdown label="Assigned To:" value="{{taskobj.taskofc}}" >
+          <paper-item>Officer 1</paper-item>
+          <paper-item>Officer 2</paper-item>
+          <paper-item>Officer 3</paper-item>
+      </paper-dropdown>
+      <div class="wrapper-btns">
+            <paper-button raised class="primary" on-tap="posttotask">Back</paper-button>
+            <paper-button raised class="primary" on-tap="saveTask">Save</paper-button>
+            <paper-button raised onclick="dialog.open()">modal dialog</paper-button>
+        </div>
+        
+    </div>
+    <paper-dialog id="dialog">
+      <h2>Dialog Title</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </paper-dialog>
+  </template>
+
+  <script>
+    class MyAddnewtask extends Polymer.Element {
+      static get is() { return 'my-addnewtask'; }
+      static get properties(){
+       return{
+            taskobj: {
+              type:Object,
+              value:{}
+            }
+        }
+      }
+      posttotask(){
+       window.location.href ="/taskdetails";
+      }
+      saveTask(){
+          console.log(this.taskobj);
+      }
+      showdialog(){
+
+
+      }
+    }
+
+    window.customElements.define(MyAddnewtask.is, MyAddnewtask);
+  </script>
+</dom-module>

@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="my-taskdetails">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      .cardwidth{
+        width:12%;display: inline-block;
+      }
+    </style>
+
+    <div class="card">
+      <h1>Task DetailsPage</h1>
+      <template is="dom-repeat" items="{{data}}">
+            <div class="card cardwidth" on-click="newAssign">
+            <div>TaskId:{{item.id}}</div>
+            <div>TaskName:{{item.name}}</div>
+            </div>
+        </template>
+        <iron-ajax id="ajax"
+                 auto
+                 url="http://jsonplaceholder.typicode.com/users/"
+                 last-response="{{data}}"
+                 on-response="_onResponse"
+                 handleAs="json">
+      </iron-ajax>
+      <div class="wrapper-btns">
+            <paper-button raised class="primary" on-tap="backtoDashboard">Back</paper-button>
+            <paper-button raised class="primary" on-tap="newAssign1">New Assign</paper-button>
+        </div>
+    </div>
+  </template>
+
+  <script>
+    class MyTaskdetails extends Polymer.Element {
+      static get is() { return 'my-taskdetails'; }
+      
+      backtoDashboard(){
+        window.location.href='/view2';
+      }
+      newAssign(e){
+        var taskid = e.model.item;
+        window.location.href='/addnewtask?taskId=' + taskid.id;
+      }
+      newAssign1(){
+        window.location.href='/addnewtask';
+      }
+      _updateData() {
+            this.async(function() {
+              this.$.ajax.generateRequest();
+            }, 2000);
+          }
+          _onResponse() {
+            console.log('received response');
+            //this._updateData();
+          }
+       constructor() { 
+            super();
+          this.employees = [
+            {id: '111', name: 'Smith'},
+            {id: '222', name: 'Johnson'},
+          ];
+       }
+    }
+
+    window.customElements.define(MyTaskdetails.is, MyTaskdetails);
+  </script>
+</dom-module>
